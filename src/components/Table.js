@@ -11,9 +11,9 @@ function Table(props) {
     }
   };
   return (
-    <div className="relative overflow-x-auto">
-      <table className="w-full">
-        <thead className="text-sm">
+    <div className="relative w-full">
+      <table className="w-full text-sm text-center">
+        <thead>
           <tr>
             <th className="px-6 py-3">Select</th>
             <th className="px-6 py-3">Product name</th>
