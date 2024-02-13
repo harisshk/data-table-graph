@@ -18,6 +18,9 @@ function App() {
     const fetchedData = await getData({ limit, skip });
 
     if (fetchedData.products) {
+      if(data.length ===0){
+        setSelectedRows(fetchedData.products.slice(0, 5).map((item) => item.id)); // This will make first 5 selected by default
+      }
       setData((prevData) => [...prevData, ...fetchedData.products]);
       setTotal(fetchedData.total);
     } else {
@@ -29,10 +32,6 @@ function App() {
   useEffect(() => {
     fetchData(limit, skip);
   }, [limit, skip]);
-
-  useEffect(() => {
-    setSelectedRows(data.slice(0, 5).map((item) => item.id));
-  }, [data]);
 
   const loadMoreData = () => {
     const newSkip = data.length;
