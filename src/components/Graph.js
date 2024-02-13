@@ -30,10 +30,13 @@ function BarChart(props) {
     yaxis: {
       title: "Stock",
     },
+    autoSize:true,
+    hideSourced:true,
+    displayModeBar: false 
   };
 
   return (
-    <div>
+    <div className="w:[90vw]">
       <Plot
         data={[
           {

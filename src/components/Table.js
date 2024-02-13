@@ -12,33 +12,33 @@ function Table(props) {
   };
   return (
     <div className="relative overflow-x-auto">
-      <table className="w-full text-sm text-left rtl:text-right ">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+      <table className="w-full">
+        <thead className="text-sm">
           <tr>
-            <th scope="col" className="px-6 py-3">
-              Product name
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Category
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Price
-            </th>
+            <th className="px-6 py-3">Select</th>
+            <th className="px-6 py-3">Product name</th>
+            <th className="px-6 py-3">Category</th>
+            <th className="px-6 py-3">Price</th>
             <th scope="col" className="px-6 py-3">
               Discount
             </th>
-            <th scope="col" className="px-6 py-3">
-              Stock
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Rating
-            </th>
+            <th className="px-6 py-3">Stock</th>
+            <th className="px-6 py-3">Rating</th>
           </tr>
         </thead>
         <tbody>
           {data.map((item) => {
             return (
               <tr key={item?.id} className="bg-white border-b ">
+                <td className="px-6 py-4">
+                  <input
+                    className=""
+                    name="Select"
+                    type="checkbox"
+                    checked={selectedRows.includes(item?.id)}
+                    onChange={() => handleCheckboxChange(item?.id)}
+                  />
+                </td>
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -50,22 +50,16 @@ function Table(props) {
                 <td className="px-6 py-4">{item.discountPercentage} %</td>
                 <td className="px-6 py-4">{item.stock}</td>
                 <td className="px-6 py-4">{item.rating}</td>
-                <td className="px-6 py-4">
-                  <input
-                    name="Select"
-                    type="checkbox"
-                    checked={selectedRows.includes(item?.id)}
-                    onChange={() => handleCheckboxChange(item?.id)}
-                  />
-                </td>
               </tr>
             );
           })}
         </tbody>
-        <tfoot>
-            {loading && <tr><td colSpan={7}>Loading...</td></tr>}
-        </tfoot>
       </table>
+      <div className="flex text-center justify-center">
+        {loading && (
+          <p className="text-center text-xl font-semibold mt-2">Loading...</p>
+        )}
+      </div>
     </div>
   );
 }
