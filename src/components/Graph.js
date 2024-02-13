@@ -25,10 +25,10 @@ function BarChart(props) {
   const layout = {
     title: "Bar Chart",
     xaxis: {
-      title: "X Axis Title",
+      title: "Category",
     },
     yaxis: {
-      title: "Y Axis Title",
+      title: "Stock",
     },
   };
 
