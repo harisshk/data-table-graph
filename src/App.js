@@ -12,6 +12,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const fetchData = async (limit, skip) => {
     setIsLoading(true);
@@ -22,6 +23,7 @@ function App() {
         setSelectedRows(fetchedData.products.slice(0, 5).map((item) => item.id)); // This will make first 5 selected by default only first time.
       }
       setData((prevData) => [...prevData, ...fetchedData.products]);
+      setFilteredData((prevFilterData) => [...prevFilterData, ...fetchedData.products]);
       setTotal(fetchedData.total);
     } else {
       setError(fetchedData.message);
@@ -33,6 +35,15 @@ function App() {
     fetchData(limit, skip);
     // eslint-disable-next-line
   }, [limit, skip]);
+
+  const handleFilter = (e) =>{
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredResults = data.filter(product => 
+      product.name.toLowerCase().includes(searchTerm) || 
+      product.category.toLowerCase().includes(searchTerm)
+    );
+    setFilteredData(filteredResults);
+  }
 
   const loadMoreData = () => {
     const newSkip = data.length;
@@ -47,11 +58,17 @@ function App() {
       {!error && data.length !== 0 && (
         <div className="flex flex-row">
           <div className="flex flex-col justify-center">
-          <BarChart data={data} selectedRows={selectedRows} />
+          <BarChart data={filteredData} selectedRows={selectedRows} />
             </div>
-          <div className="max-h-[100vh] overflow-y-auto">
+          <div className="max-h-[100vh] overflow-y-auto flex flex-col items-end">
+            <input
+              type="text"
+              placeholder="Search Product or Category..."
+              onChange={handleFilter}
+              className="border border-gray-400 p-2 m-4 self-end w-96"
+            />
             <Table
-              data={data}
+              data={filteredData}
               setSelectedRows={setSelectedRows}
               selectedRows={selectedRows}
               loading={isLoading}
